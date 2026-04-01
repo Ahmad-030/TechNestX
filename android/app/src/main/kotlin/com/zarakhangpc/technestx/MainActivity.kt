@@ -1,4 +1,4 @@
-package com.zarakhangpc.tasknestx
+package com.zarakhangpc.technestx
 
 import io.flutter.embedding.android.FlutterActivity
 

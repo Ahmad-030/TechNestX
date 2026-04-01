@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
+import 'package:technestx/about_screen.dart';
 import 'package:technestx/task_provider.dart';
 
 import 'app_theme.dart';
@@ -32,10 +34,46 @@ class SettingsScreen extends StatelessWidget {
             Center(
               child: Column(
                 children: [
-                  const Text('🪺', style: TextStyle(fontSize: 60)).animate().scale(duration: 600.ms, curve: Curves.elasticOut),
-                  const SizedBox(height: 8),
+                  SizedBox(
+                    width: 180,
+                    height: 150,
+                    child: Lottie.asset(
+                      'assets/checked.json',
+                      repeat: true,
+                      errorBuilder: (_, __, ___) =>
+                      // Fallback: animated dots if lottie fails to load
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: List.generate(
+                          3,
+                              (i) => Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 4),
+                            width: 8,
+                            height: 8,
+                            decoration: const BoxDecoration(
+                              color: Color(0xFFFF6B35),
+                              shape: BoxShape.circle,
+                            ),
+                          )
+                              .animate(onPlay: (c) => c.repeat())
+                              .fadeIn(
+                              duration: 400.ms,
+                              delay: Duration(
+                                  milliseconds: 1200 + i * 200))
+                              .then()
+                              .fadeOut(duration: 400.ms)
+                              .then()
+                              .fadeIn(duration: 400.ms),
+                        ),
+                      ),
+                    ),
+                  ).animate().fadeIn(delay: 1200.ms).scale(
+                      begin: const Offset(0.5, 0.5),
+                      end: const Offset(1, 1),
+                      delay: 1200.ms,
+                      curve: Curves.elasticOut),
+                  const SizedBox(height: 0),
                   Text('TaskNestX', style: TextStyle(color: textColor, fontFamily: 'Outfit', fontWeight: FontWeight.bold, fontSize: 22)),
-                  Text('v1.0.0 • ZaraGamesHub', style: TextStyle(color: subColor, fontFamily: 'Outfit', fontSize: 12)),
                 ],
               ),
             ).animate().fadeIn(delay: 100.ms),
@@ -84,7 +122,7 @@ class SettingsScreen extends StatelessWidget {
                     label: 'Privacy Policy',
                     textColor: textColor,
                     subColor: subColor,
-                    onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const WebViewScreen(title: 'Privacy Policy', assetPath: 'assets/html/privacy_policy.html'))),
+                    onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const WebViewScreen(title: 'Privacy Policy', assetPath: 'assets/privacy_policy.html'))),
                   ),
                   Divider(height: 1, color: isDark ? AppTheme.darkBorder : AppTheme.lightBorder),
                   _SettingsTile(
@@ -92,7 +130,7 @@ class SettingsScreen extends StatelessWidget {
                     label: 'About TaskNestX',
                     textColor: textColor,
                     subColor: subColor,
-                    onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const WebViewScreen(title: 'About', assetPath: 'assets/html/about.html'))),
+                    onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => AboutScreen())),
                   ),
                 ],
               ),

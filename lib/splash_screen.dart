@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:technestx/task_provider.dart';
 import 'main_screen.dart';
@@ -11,13 +13,16 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMixin {
+class _SplashScreenState extends State<SplashScreen>
+    with TickerProviderStateMixin {
   late AnimationController _nestController;
 
   @override
   void initState() {
     super.initState();
-    _nestController = AnimationController(vsync: this, duration: const Duration(seconds: 2))..repeat(reverse: true);
+    _nestController = AnimationController(
+        vsync: this, duration: const Duration(seconds: 2))
+      ..repeat(reverse: true);
     _initApp();
   }
 
@@ -31,7 +36,8 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
       Navigator.of(context).pushReplacement(
         PageRouteBuilder(
           pageBuilder: (_, __, ___) => const MainScreen(),
-          transitionsBuilder: (_, anim, __, child) => FadeTransition(opacity: anim, child: child),
+          transitionsBuilder: (_, anim, __, child) =>
+              FadeTransition(opacity: anim, child: child),
           transitionDuration: const Duration(milliseconds: 500),
         ),
       );
@@ -60,30 +66,57 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               // Animated nest logo
-              AnimatedBuilder(
-                animation: _nestController,
-                builder: (_, __) => Transform.scale(
-                  scale: 1.0 + _nestController.value * 0.08,
-                  child: const Text('🪺', style: TextStyle(fontSize: 90)),
+              SizedBox(
+                width: 280,
+                height: 280,
+                child: Lottie.asset(
+                  'assets/checked.json',
+                  repeat: true,
+                  errorBuilder: (_, __, ___) =>
+                  // Fallback: animated dots if lottie fails to load
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: List.generate(
+                      3,
+                          (i) => Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 4),
+                        width: 8,
+                        height: 8,
+                        decoration: const BoxDecoration(
+                          color: Color(0xFFFF6B35),
+                          shape: BoxShape.circle,
+                        ),
+                      )
+                          .animate(onPlay: (c) => c.repeat())
+                          .fadeIn(
+                          duration: 400.ms,
+                          delay: Duration(
+                              milliseconds: 1200 + i * 200))
+                          .then()
+                          .fadeOut(duration: 400.ms)
+                          .then()
+                          .fadeIn(duration: 400.ms),
+                    ),
+                  ),
                 ),
-              )
-                  .animate()
-                  .fadeIn(duration: 600.ms, delay: 200.ms)
-                  .scale(begin: const Offset(0.3, 0.3), end: const Offset(1.0, 1.0), duration: 700.ms, curve: Curves.elasticOut),
+              ).animate().fadeIn(delay: 1200.ms).scale(
+                  begin: const Offset(0.5, 0.5),
+                  end: const Offset(1, 1),
+                  delay: 1200.ms,
+                  curve: Curves.elasticOut),
 
-              const SizedBox(height: 24),
+
 
               // App name
               ShaderMask(
                 shaderCallback: (bounds) => const LinearGradient(
                   colors: [Color(0xFFFF6B35), Color(0xFFFFD23F)],
                 ).createShader(bounds),
-                child: const Text(
+                child: Text(
                   'TaskNestX',
-                  style: TextStyle(
+                  style: GoogleFonts.outfit(
                     fontSize: 42,
                     fontWeight: FontWeight.bold,
-                    fontFamily: 'Outfit',
                     color: Colors.white,
                     letterSpacing: 2,
                   ),
@@ -91,43 +124,28 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
               )
                   .animate()
                   .fadeIn(duration: 500.ms, delay: 700.ms)
-                  .slideY(begin: 0.3, end: 0, duration: 500.ms, delay: 700.ms, curve: Curves.easeOut),
+                  .slideY(
+                  begin: 0.3,
+                  end: 0,
+                  duration: 500.ms,
+                  delay: 700.ms,
+                  curve: Curves.easeOut),
 
               const SizedBox(height: 8),
 
               Text(
                 'Nest. Complete. Conquer.',
-                style: TextStyle(
+                style: GoogleFonts.outfit(
                   fontSize: 15,
-                  fontFamily: 'Outfit',
                   color: Colors.white.withOpacity(0.5),
                   letterSpacing: 1.5,
                 ),
-              )
-                  .animate()
-                  .fadeIn(duration: 500.ms, delay: 1000.ms),
+              ).animate().fadeIn(duration: 500.ms, delay: 1000.ms),
 
-              const SizedBox(height: 60),
+              const SizedBox(height: 48),
 
-              // Loading dots
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: List.generate(3, (i) => Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 4),
-                  width: 8,
-                  height: 8,
-                  decoration: const BoxDecoration(
-                    color: Color(0xFFFF6B35),
-                    shape: BoxShape.circle,
-                  ),
-                ).animate(onPlay: (c) => c.repeat())
-                    .fadeIn(duration: 400.ms, delay: Duration(milliseconds: 1200 + i * 200))
-                    .then()
-                    .fadeOut(duration: 400.ms)
-                    .then()
-                    .fadeIn(duration: 400.ms)
-                ),
-              ),
+              // Lottie checked animation replacing the loading dots
+
             ],
           ),
         ),

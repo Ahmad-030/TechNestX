@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'home_screen.dart';
 import 'task_list_screen.dart';
 import 'rewards_screen.dart';
@@ -15,6 +17,7 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 0;
+  DateTime? _lastBackPressTime;
 
   final List<Widget> _screens = const [
     HomeScreen(),
@@ -24,38 +27,108 @@ class _MainScreenState extends State<MainScreen> {
     SettingsScreen(),
   ];
 
+  Future<bool> _onWillPop() async {
+    // If not on Home tab, switch to Home tab first
+    if (_currentIndex != 0) {
+      setState(() => _currentIndex = 0);
+      return false;
+    }
+
+    final now = DateTime.now();
+    final isDoubleBack = _lastBackPressTime != null &&
+        now.difference(_lastBackPressTime!) < const Duration(seconds: 2);
+
+    if (isDoubleBack) {
+      // Exit the app
+      await SystemNavigator.pop();
+      return true;
+    }
+
+    _lastBackPressTime = now;
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          'Press back again to exit 🪺',
+          style: GoogleFonts.outfit(fontWeight: FontWeight.w500),
+        ),
+        backgroundColor: const Color(0xFFFF6B35),
+        behavior: SnackBarBehavior.floating,
+        duration: const Duration(seconds: 2),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        margin: const EdgeInsets.all(16),
+      ),
+    );
+    return false;
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
 
-    return Scaffold(
-      body: AnimatedSwitcher(
-        duration: const Duration(milliseconds: 250),
-        child: _screens[_currentIndex],
-      ),
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          color: isDark ? const Color(0xFF1A1A2E) : Colors.white,
-          border: Border(
-            top: BorderSide(
-              color: isDark ? const Color(0xFF2A2A4A) : const Color(0xFFDDDDEE),
-              width: 1,
+    // Use PopScope for Flutter 3.16+ or WillPopScope for older versions
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (didPop) async {
+        if (didPop) return;
+        await _onWillPop();
+      },
+      child: Scaffold(
+        body: AnimatedSwitcher(
+          duration: const Duration(milliseconds: 250),
+          child: _screens[_currentIndex],
+        ),
+        bottomNavigationBar: Container(
+          decoration: BoxDecoration(
+            color: isDark ? const Color(0xFF1A1A2E) : Colors.white,
+            border: Border(
+              top: BorderSide(
+                color: isDark
+                    ? const Color(0xFF2A2A4A)
+                    : const Color(0xFFDDDDEE),
+                width: 1,
+              ),
             ),
           ),
-        ),
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                _NavItem(icon: Icons.home_rounded, label: 'Home', index: 0, current: _currentIndex, onTap: _onTap),
-                _NavItem(icon: Icons.checklist_rounded, label: 'Tasks', index: 1, current: _currentIndex, onTap: _onTap),
-                _NavItem(icon: Icons.emoji_events_rounded, label: 'Rewards', index: 2, current: _currentIndex, onTap: _onTap),
-                _NavItem(icon: Icons.bar_chart_rounded, label: 'Stats', index: 3, current: _currentIndex, onTap: _onTap),
-                _NavItem(icon: Icons.settings_rounded, label: 'Settings', index: 4, current: _currentIndex, onTap: _onTap),
-              ],
+          child: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  _NavItem(
+                      icon: Icons.home_rounded,
+                      label: 'Home',
+                      index: 0,
+                      current: _currentIndex,
+                      onTap: _onTap),
+                  _NavItem(
+                      icon: Icons.checklist_rounded,
+                      label: 'Tasks',
+                      index: 1,
+                      current: _currentIndex,
+                      onTap: _onTap),
+                  _NavItem(
+                      icon: Icons.emoji_events_rounded,
+                      label: 'Rewards',
+                      index: 2,
+                      current: _currentIndex,
+                      onTap: _onTap),
+                  _NavItem(
+                      icon: Icons.bar_chart_rounded,
+                      label: 'Stats',
+                      index: 3,
+                      current: _currentIndex,
+                      onTap: _onTap),
+                  _NavItem(
+                      icon: Icons.settings_rounded,
+                      label: 'Settings',
+                      index: 4,
+                      current: _currentIndex,
+                      onTap: _onTap),
+                ],
+              ),
             ),
           ),
         ),
@@ -73,7 +146,12 @@ class _NavItem extends StatelessWidget {
   final int current;
   final ValueChanged<int> onTap;
 
-  const _NavItem({required this.icon, required this.label, required this.index, required this.current, required this.onTap});
+  const _NavItem(
+      {required this.icon,
+        required this.label,
+        required this.index,
+        required this.current,
+        required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -85,20 +163,24 @@ class _NavItem extends StatelessWidget {
         duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
         decoration: BoxDecoration(
-          color: selected ? const Color(0xFFFF6B35).withOpacity(0.15) : Colors.transparent,
+          color: selected
+              ? const Color(0xFFFF6B35).withOpacity(0.15)
+              : Colors.transparent,
           borderRadius: BorderRadius.circular(20),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(icon, color: selected ? const Color(0xFFFF6B35) : Colors.grey, size: 24),
+            Icon(icon,
+                color: selected ? const Color(0xFFFF6B35) : Colors.grey,
+                size: 24),
             const SizedBox(height: 2),
             Text(
               label,
-              style: TextStyle(
+              style: GoogleFonts.outfit(
                 fontSize: 10,
-                fontFamily: 'Outfit',
-                fontWeight: selected ? FontWeight.bold : FontWeight.normal,
+                fontWeight:
+                selected ? FontWeight.bold : FontWeight.normal,
                 color: selected ? const Color(0xFFFF6B35) : Colors.grey,
               ),
             ),
