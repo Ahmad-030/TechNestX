@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Privacy Policy – TaskNestX</title>
+    <style>
+        :root {
+          --orange: #FF6B35;
+          --yellow: #FFD23F;
+          --teal: #4ECDC4;
+          --bg: #0D0D14;
+          --surface: #1A1A2E;
+          --card: #16213E;
+          --border: #2A2A4A;
+          --text: #F0F0FF;
+          --sub: #8888AA;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+          background: var(--bg);
+          color: var(--text);
+          font-family: -apple-system, 'Segoe UI', sans-serif;
+          padding: 24px 20px 60px;
+          line-height: 1.7;
+          font-size: 15px;
+        }
+        .hero {
+          text-align: center;
+          padding: 32px 0 28px;
+          animation: fadeDown 0.6s ease both;
+        }
+        .hero .nest { font-size: 56px; animation: bounce 1.8s ease infinite; }
+        @keyframes bounce {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-10px); }
+        }
+        .hero h1 {
+          font-size: 26px;
+          font-weight: 800;
+          background: linear-gradient(135deg, var(--orange), var(--yellow));
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          margin-top: 10px;
+        }
+        .hero p { color: var(--sub); font-size: 13px; margin-top: 6px; }
+        .badge {
+          display: inline-block;
+          background: rgba(255,107,53,0.12);
+          border: 1px solid rgba(255,107,53,0.3);
+          color: var(--orange);
+          border-radius: 20px;
+          padding: 4px 14px;
+          font-size: 12px;
+          font-weight: 600;
+          margin-top: 10px;
+        }
+        .section {
+          background: var(--card);
+          border: 1px solid var(--border);
+          border-radius: 18px;
+          padding: 20px;
+          margin-bottom: 16px;
+          animation: fadeUp 0.5s ease both;
+        }
+        .section:nth-child(1) { animation-delay: 0.1s; }
+        .section:nth-child(2) { animation-delay: 0.15s; }
+        .section:nth-child(3) { animation-delay: 0.2s; }
+        .section:nth-child(4) { animation-delay: 0.25s; }
+        .section:nth-child(5) { animation-delay: 0.3s; }
+        .section:nth-child(6) { animation-delay: 0.35s; }
+        .section:nth-child(7) { animation-delay: 0.4s; }
+        @keyframes fadeUp {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeDown {
+          from { opacity: 0; transform: translateY(-20px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .section-header {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          margin-bottom: 12px;
+        }
+        .section-icon {
+          font-size: 22px;
+          width: 40px;
+          height: 40px;
+          background: rgba(255,107,53,0.1);
+          border-radius: 12px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+        }
+        h2 {
+          font-size: 17px;
+          font-weight: 700;
+          color: var(--text);
+        }
+        p { color: var(--sub); margin-bottom: 8px; font-size: 14px; }
+        p:last-child { margin-bottom: 0; }
+        ul { color: var(--sub); padding-left: 18px; font-size: 14px; }
+        li { margin-bottom: 6px; }
+        .highlight {
+          background: rgba(78,205,196,0.1);
+          border-left: 3px solid var(--teal);
+          border-radius: 0 10px 10px 0;
+          padding: 12px 14px;
+          color: var(--teal);
+          font-size: 14px;
+          margin-top: 10px;
+        }
+        .contact-box {
+          background: linear-gradient(135deg, rgba(255,107,53,0.12), rgba(255,210,63,0.08));
+          border: 1px solid rgba(255,107,53,0.25);
+          border-radius: 14px;
+          padding: 16px;
+          text-align: center;
+          margin-top: 8px;
+        }
+        .contact-box a {
+          color: var(--orange);
+          text-decoration: none;
+          font-weight: 700;
+        }
+        .footer {
+          text-align: center;
+          color: var(--sub);
+          font-size: 12px;
+          margin-top: 32px;
+          padding-top: 20px;
+          border-top: 1px solid var(--border);
+        }
+    </style>
+</head>
+<body>
+
+<div class="hero">
+    <div class="nest">🪺</div>
+    <h1>Privacy Policy</h1>
+    <p>TaskNestX — ZaraGamesHub</p>
+    <span class="badge">Last updated: April 2025</span>
+</div>
+
+<div class="section">
+    <div class="section-header">
+        <div class="section-icon">🔒</div>
+        <h2>Your Privacy is Our Priority</h2>
+    </div>
+    <p>TaskNestX is built with privacy-first principles. We believe your personal productivity data belongs to you — and only you.</p>
+    <div class="highlight">✅ TaskNestX works 100% offline. No internet connection required. No accounts needed.</div>
+</div>
+
+<div class="section">
+    <div class="section-header">
+        <div class="section-icon">📦</div>
+        <h2>Information We Collect</h2>
+    </div>
+    <p><strong style="color:var(--text)">We collect absolutely nothing.</strong></p>
+    <p>TaskNestX does not collect, transmit, or store any personal information on external servers. All data you create — tasks, points, badges, and streaks — is stored exclusively on your own device using local storage (SharedPreferences).</p>
+    <ul>
+        <li>No name, email, or account required</li>
+        <li>No analytics or tracking SDKs</li>
+        <li>No crash reporting sent externally</li>
+        <li>No advertisements or ad SDKs</li>
+    </ul>
+</div>
+
+<div class="section">
+    <div class="section-header">
+        <div class="section-icon">📱</div>
+        <h2>Local Data Storage</h2>
+    </div>
+    <p>All app data is stored locally on your device:</p>
+    <ul>
+        <li><strong style="color:var(--text)">Tasks</strong> — titles, descriptions, priorities, tags, due dates</li>
+        <li><strong style="color:var(--text)">Gamification</strong> — points, badges, streaks, level progress</li>
+        <li><strong style="color:var(--text)">Preferences</strong> — theme selection (dark/light)</li>
+    </ul>
+    <p style="margin-top:10px">This data never leaves your device. Uninstalling the app permanently deletes all stored data.</p>
+</div>
+
+<div class="section">
+    <div class="section-header">
+        <div class="section-icon">🚫</div>
+        <h2>Permissions</h2>
+    </div>
+    <p>TaskNestX requires <strong style="color:var(--text)">zero permissions</strong>. We do not request access to:</p>
+    <ul>
+        <li>Camera, microphone, or photos</li>
+        <li>Contacts or calendar</li>
+        <li>Location services</li>
+        <li>Network access</li>
+        <li>Storage (beyond app-private SharedPreferences)</li>
+    </ul>
+</div>
+
+<div class="section">
+    <div class="section-header">
+        <div class="section-icon">👶</div>
+        <h2>Children's Privacy</h2>
+    </div>
+    <p>TaskNestX does not knowingly collect any data from anyone, including children under the age of 13. Since no data is ever collected or transmitted, the app is safe for all ages.</p>
+</div>
+
+<div class="section">
+    <div class="section-header">
+        <div class="section-icon">🔄</div>
+        <h2>Changes to This Policy</h2>
+    </div>
+    <p>We may update this Privacy Policy occasionally to reflect app updates or legal requirements. Any changes will be posted within the app. Continued use after changes constitutes acceptance of the updated policy.</p>
+</div>
+
+<div class="section">
+    <div class="section-header">
+        <div class="section-icon">✉️</div>
+        <h2>Contact Us</h2>
+    </div>
+    <p>Questions or concerns about your privacy? Reach out to us:</p>
+    <div class="contact-box">
+        <p style="color:var(--text); font-weight:700; font-size:16px">ZaraGamesHub</p>
+        <a href="mailto:zarakhangpc@gmail.com">zarakhangpc@gmail.com</a>
+    </div>
+</div>
+
+<div class="footer">
+    <p>© 2025 ZaraGamesHub · TaskNestX · All rights reserved</p>
+    <p style="margin-top:6px">Built with ❤️ for productivity lovers</p>
+</div>
+
+</body>
+</html>
