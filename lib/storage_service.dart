@@ -44,10 +44,10 @@ class StorageService {
     await _prefs.setInt(_pointsKey, points);
   }
 
-  // Badges
-  List<Badge> getBadges() {
+  // Badges — uses AppBadge to avoid conflict with Flutter's Badge widget
+  List<AppBadge> getBadges() {
     final raw = _prefs.getString(_badgesKey);
-    final defaults = Badge.defaultBadges();
+    final defaults = AppBadge.defaultBadges();
     if (raw == null) return defaults;
     final List<dynamic> list = jsonDecode(raw);
     final savedMap = {for (var e in list) e['id']: e};
@@ -61,7 +61,7 @@ class StorageService {
     return defaults;
   }
 
-  Future<void> saveBadges(List<Badge> badges) async {
+  Future<void> saveBadges(List<AppBadge> badges) async {
     final raw = jsonEncode(badges.map((b) => b.toJson()).toList());
     await _prefs.setString(_badgesKey, raw);
   }
@@ -69,7 +69,9 @@ class StorageService {
   // Streak
   Map<String, dynamic> getStreakData() {
     final raw = _prefs.getString(_streakKey);
-    if (raw == null) return {'currentStreak': 0, 'lastActiveDate': null, 'longestStreak': 0};
+    if (raw == null) {
+      return {'currentStreak': 0, 'lastActiveDate': null, 'longestStreak': 0};
+    }
     return jsonDecode(raw);
   }
 
@@ -79,7 +81,8 @@ class StorageService {
 
   // Theme
   String getTheme() => _prefs.getString(_themeKey) ?? 'dark';
-  Future<void> saveTheme(String theme) async => await _prefs.setString(_themeKey, theme);
+  Future<void> saveTheme(String theme) async =>
+      await _prefs.setString(_themeKey, theme);
 
   // Daily stats
   Map<String, dynamic> getDailyStats() {

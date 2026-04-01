@@ -1,6 +1,4 @@
 import 'package:technestx/task_model.dart';
-
-
 import 'badge_model.dart';
 import 'storage_service.dart';
 
@@ -10,8 +8,7 @@ class GameService {
   GameService(this._storage);
 
   int get totalPoints => _storage.getTotalPoints();
-  List<Badge> get badges => _storage.getBadges();
-
+  List<AppBadge> get badges => _storage.getBadges();
   UserLevel get currentLevel => UserLevel.fromPoints(totalPoints);
 
   int get currentStreak {
@@ -24,7 +21,7 @@ class GameService {
     return data['longestStreak'] ?? 0;
   }
 
-  Future<List<Badge>> completeTask(Task task) async {
+  Future<List<AppBadge>> completeTask(Task task) async {
     // Add points
     final newPoints = totalPoints + task.points;
     await _storage.savePoints(newPoints);
@@ -75,15 +72,17 @@ class GameService {
     });
   }
 
-  Future<List<Badge>> _checkBadges(int points, Task completedTask) async {
-    final badges = _storage.getBadges();
+  Future<List<AppBadge>> _checkBadges(int points, Task completedTask) async {
+    final allBadges = _storage.getBadges();
     final tasks = _storage.getTasks();
-    final newlyUnlocked = <Badge>[];
+    final newlyUnlocked = <AppBadge>[];
 
-    final completedTasks = tasks.where((t) => t?.status == TaskStatus.completed).toList();
-    final highPrioCompleted = completedTasks.where((t) => t.priority == Priority.high).length;
+    final completedTasks =
+    tasks.where((t) => t.status == TaskStatus.completed).toList();
+    final highPrioCompleted =
+        completedTasks.where((t) => t.priority == Priority.high).length;
 
-    for (final badge in badges) {
+    for (final badge in allBadges) {
       if (badge.isUnlocked) continue;
 
       bool unlock = false;
@@ -127,7 +126,7 @@ class GameService {
       }
     }
 
-    await _storage.saveBadges(badges);
+    await _storage.saveBadges(allBadges);
     return newlyUnlocked;
   }
 
@@ -159,5 +158,6 @@ class GameService {
   }
 
   String _todayKey() => _dateKey(DateTime.now());
-  String _dateKey(DateTime d) => '${d.year}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
+  String _dateKey(DateTime d) =>
+      '${d.year}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
 }

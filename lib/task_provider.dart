@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:technestx/storage_service.dart';
 import 'package:technestx/task_model.dart';
-import '../models/task_model.dart';
-import '../models/badge_model.dart';
-import '../services/storage_service.dart';
-import '../services/game_service.dart';
+import 'package:technestx/badge_model.dart';
+import 'package:technestx/game_service.dart';
 import 'dart:math';
-
-import 'game_service.dart';
 
 class TaskProvider extends ChangeNotifier {
   late StorageService _storage;
@@ -39,7 +35,6 @@ class TaskProvider extends ChangeNotifier {
     final today = DateTime.now();
     return _tasks.where((t) {
       if (t.dueDate == null) {
-        // Show tasks created today
         final c = t.createdAt;
         return c.year == today.year && c.month == today.month && c.day == today.day;
       }
@@ -100,7 +95,9 @@ class TaskProvider extends ChangeNotifier {
     }
   }
 
-  Future<List<Badge>> completeTask(String taskId) async {
+  // FIX: was Future<List<Badge>> clashing with Flutter's Badge widget.
+  // Correctly typed as Future<List<AppBadge>>.
+  Future<List<AppBadge>> completeTask(String taskId) async {
     final idx = _tasks.indexWhere((t) => t.id == taskId);
     if (idx == -1) return [];
     _tasks[idx] = _tasks[idx].copyWith(

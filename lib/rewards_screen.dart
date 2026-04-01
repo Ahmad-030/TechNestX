@@ -148,7 +148,7 @@ class RewardsScreen extends StatelessWidget {
 }
 
 class _BadgeCard extends StatelessWidget {
-  final Badge badge;
+  final AppBadge badge;
   final bool isDark;
   final Color subColor;
 

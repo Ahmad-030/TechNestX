@@ -1,4 +1,5 @@
-class Badge {
+// Renamed from Badge → AppBadge to avoid conflict with Flutter's Material Badge widget.
+class AppBadge {
   final String id;
   final String title;
   final String description;
@@ -7,7 +8,7 @@ class Badge {
   bool isUnlocked;
   DateTime? unlockedAt;
 
-  Badge({
+  AppBadge({
     required this.id,
     required this.title,
     required this.description,
@@ -23,17 +24,67 @@ class Badge {
     'unlockedAt': unlockedAt?.toIso8601String(),
   };
 
-  static List<Badge> defaultBadges() => [
-    Badge(id: 'first_task', title: 'First Step', description: 'Complete your first task', emoji: '🐣', requiredPoints: 10),
-    Badge(id: 'starter', title: 'Starter', description: 'Earn 50 points', emoji: '⭐', requiredPoints: 50),
-    Badge(id: 'achiever', title: 'Achiever', description: 'Earn 150 points', emoji: '🔥', requiredPoints: 150),
-    Badge(id: 'warrior', title: 'Task Warrior', description: 'Earn 300 points', emoji: '⚔️', requiredPoints: 300),
-    Badge(id: 'champion', title: 'Champion', description: 'Earn 500 points', emoji: '🏆', requiredPoints: 500),
-    Badge(id: 'legend', title: 'Legend', description: 'Earn 1000 points', emoji: '👑', requiredPoints: 1000),
-    Badge(id: 'streak3', title: '3-Day Streak', description: '3 days in a row', emoji: '🌟', requiredPoints: 0),
-    Badge(id: 'streak7', title: 'Week Warrior', description: '7 days in a row', emoji: '💎', requiredPoints: 0),
-    Badge(id: 'highprio', title: 'Prioritizer', description: 'Complete 5 high-priority tasks', emoji: '🎯', requiredPoints: 0),
-    Badge(id: 'tenner', title: 'Tenner', description: 'Complete 10 tasks total', emoji: '🌈', requiredPoints: 0),
+  static List<AppBadge> defaultBadges() => [
+    AppBadge(
+        id: 'first_task',
+        title: 'First Step',
+        description: 'Complete your first task',
+        emoji: '🐣',
+        requiredPoints: 10),
+    AppBadge(
+        id: 'starter',
+        title: 'Starter',
+        description: 'Earn 50 points',
+        emoji: '⭐',
+        requiredPoints: 50),
+    AppBadge(
+        id: 'achiever',
+        title: 'Achiever',
+        description: 'Earn 150 points',
+        emoji: '🔥',
+        requiredPoints: 150),
+    AppBadge(
+        id: 'warrior',
+        title: 'Task Warrior',
+        description: 'Earn 300 points',
+        emoji: '⚔️',
+        requiredPoints: 300),
+    AppBadge(
+        id: 'champion',
+        title: 'Champion',
+        description: 'Earn 500 points',
+        emoji: '🏆',
+        requiredPoints: 500),
+    AppBadge(
+        id: 'legend',
+        title: 'Legend',
+        description: 'Earn 1000 points',
+        emoji: '👑',
+        requiredPoints: 1000),
+    AppBadge(
+        id: 'streak3',
+        title: '3-Day Streak',
+        description: '3 days in a row',
+        emoji: '🌟',
+        requiredPoints: 0),
+    AppBadge(
+        id: 'streak7',
+        title: 'Week Warrior',
+        description: '7 days in a row',
+        emoji: '💎',
+        requiredPoints: 0),
+    AppBadge(
+        id: 'highprio',
+        title: 'Prioritizer',
+        description: 'Complete 5 high-priority tasks',
+        emoji: '🎯',
+        requiredPoints: 0),
+    AppBadge(
+        id: 'tenner',
+        title: 'Tenner',
+        description: 'Complete 10 tasks total',
+        emoji: '🌈',
+        requiredPoints: 0),
   ];
 }
 
